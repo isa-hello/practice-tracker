@@ -1,19 +1,6 @@
 """
 Database model(s), via Flask-SQLAlchemy.
 
-Sketch of what a Problem entry probably needs to hold — decide the actual
-field types, nullability, and any defaults yourself:
-
-- id
-- title                (e.g. "Trapping Rain Water")
-- pattern              (e.g. "Two Pointers")
-- difficulty           (Easy / Medium / Hard)
-- date_solved
-- needed_help          (bool)
-- notes                (free text — optional)
-- retest_completed_at  (nullable — set once a due retest has been redone)
-
-TODO: define `db = SQLAlchemy()` and the `Problem` model.
 """
 from flask_sqlalchemy import SQLAlchemy
 

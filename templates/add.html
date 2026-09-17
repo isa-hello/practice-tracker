@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Log a Solved Problem</h2>
+
+<form method = "POST" action="{{ url_for('add') }}">
+    <input type="text" name="title">
+    <input type="text" name="pattern"> 
+    <input type="text" name="difficulty">
+    <input type="date" name="date_solved">
+    <input type="checkbox" name="needed_help">
+    <textarea name="notes"></textarea>
+    
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}

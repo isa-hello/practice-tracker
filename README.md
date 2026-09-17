@@ -5,10 +5,6 @@ log LeetCode problems as you solve them, flag which ones needed help, and
 automatically surface which ones are due for a cold retest (per the
 "revisit cold after ~3 days if it needed heavy help" rule already in use).
 
-This is a personal project, not LeetCode practice — the code here should be
-written by you, the same way everything in `fall` has been. Claude's role is
-scoping, review, and debugging help, not writing the app itself.
-
 ## Status
 
 **Phase 1 (in progress):** core app running locally against SQLite.
@@ -16,7 +12,7 @@ scoping, review, and debugging help, not writing the app itself.
 Azure Database for PostgreSQL Flexible Server.
 **Phase 3 (not started):** deploy the real app to Azure, verified live.
 
-## v1 scope (deliberately small)
+## v1 scope (smaller)
 
 - Add a solved problem: title, pattern/category, difficulty, date solved,
   whether it needed help, notes.

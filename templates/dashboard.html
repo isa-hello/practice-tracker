@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Logged Problems</h2>
+
+<!--
+loop over `problems` (list of Problem rows passed from the dashboard
+route) and render each one — title, pattern, difficulty, date_solved.
+
+For each problem whose id is in `due_ids`, mark it as due for a cold
+retest: e.g. a "due for retest" label plus a small form/button that POSTs
+to /problems/<id>/retest.
+-->
+
+{% for problem in problems %}
+<p>{{ problem.title }} - {{ problem.pattern }}
+    {% if problem.id in due_ids %}
+    {{ "due for retest" }}
+    {% endif %}
+</p>
+
+{% endfor %}
+{% endblock %}
