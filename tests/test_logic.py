@@ -27,3 +27,10 @@ def test_is_retest_due_fixed_cases():
             f"date_solved={date_solved} needed_help={needed_help} "
             f"expected={expected} got={result}"
         )
+
+
+def test_is_retest_due_with_completed_retest():
+    result = is_retest_due(
+        TODAY - timedelta(days=10), True, retest_completed_at=TODAY, today=TODAY
+    )
+    assert result is False, "should not be due onfce a retest has been completed"

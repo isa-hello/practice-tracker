@@ -13,12 +13,18 @@ to /problems/<id>/retest.
 -->
 
 {% for problem in problems %}
-<p>{{ problem.title }} - {{ problem.pattern }}
+<p>{{ problem.title }} - {{ problem.pattern }} - {{ problem.difficulty }} - {{ problem.notes }} - {{ problem.date_solved.strftime('%b %d, %Y') }}
     {% if problem.id in due_ids %}
     {{ " - Due for retest" }}
     <form method="POST" action="{{ url_for ('retest', problem_id=problem.id) }}">
         <button type="submit">Mark retest done</button>
     </form>
+    {% elif not problem.needed_help %}
+    {{ "(No action needed.)" }}
+    {% elif problem.needed_help and problem.retest_completed_at != None %}
+    {{ "(Retest completed.) " }}
+    {% else %}
+    {{ "(Retest not due.) " }}
     {% endif %}
 </p>
 
