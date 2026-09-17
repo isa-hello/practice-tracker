@@ -4,13 +4,15 @@
 <h2>Log a Solved Problem</h2>
 
 <form method = "POST" action="{{ url_for('add') }}">
-    <input type="text" name="title">
-    <input type="text" name="pattern"> 
-    <input type="text" name="difficulty">
-    <input type="date" name="date_solved">
-    <input type="checkbox" name="needed_help">
+    Title: <input type="text" name="title"><br>
+    Pattern: <input type="text" name="pattern"><br>
+    Difficulty: <input type="text" name="difficulty"><br>
+    Date solved: <input type="date" name="date_solved"><br>
+    Needed help to solve it? <input type="checkbox" name="needed_help"><br>
+    Repeat retests (growing interval)? <input type="checkbox" name="repeat_retests"><br>
+    Notes:<br>
     <textarea name="notes"></textarea>
-    
+
     <button type="submit">Save</button>
 </form>
 

@@ -15,3 +15,5 @@ class Problem(db.Model):
     needed_help = db.Column(db.Boolean, nullable=False)
     notes = db.Column(db.Text)
     retest_completed_at = db.Column(db.Date)
+    retest_interval_days = db.Column(db.Integer, nullable=False, default=3)
+    repeat_retests = db.Column(db.Boolean, nullable=False, default=False)

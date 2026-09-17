@@ -43,8 +43,15 @@ def dashboard():
 
     problems = Problem.query.all()
     due_ids = []
-    for problem in problems:
-        if logic.is_retest_due(problem.date_solved, problem.needed_help, problem.retest_completed_at, date.today()) is True:
+    for problem in problems:    
+        if logic.is_retest_due(
+            problem.date_solved,
+            problem.needed_help,
+            retest_completed_at=problem.retest_completed_at,
+            repeat_retests=problem.repeat_retests,
+            retest_interval_days=problem.retest_interval_days,
+            today=date.today(),
+        ) is True:
             due_ids.append(problem.id)
 
     return render_template('dashboard.html', problems=problems, due_ids=due_ids)
@@ -63,9 +70,10 @@ def add():
         difficulty = request.form['difficulty']
         date_solved = date.fromisoformat(request.form['date_solved'])
         needed_help = request.form.get('needed_help') == 'on'
+        repeat_retests = request.form.get('repeat_retests') == 'on'
         notes = request.form['notes']
 
-        problem = Problem(title=title, pattern=pattern, difficulty=difficulty, date_solved=date_solved, needed_help=needed_help, notes=notes)
+        problem = Problem(title=title, pattern=pattern, difficulty=difficulty, date_solved=date_solved, needed_help=needed_help, repeat_retests=repeat_retests, notes=notes)
         db.session.add(problem)
         db.session.commit()
     return render_template('add.html')
@@ -79,6 +87,8 @@ def retest(problem_id):
     # - commit the change, then redirect back to the dashboard
     problem = Problem.query.get_or_404(problem_id)
     problem.retest_completed_at = date.today()
+    if problem.repeat_retests is True:
+        problem.retest_interval_days *= 2
     db.session.commit()
     
     return redirect(url_for('dashboard'))

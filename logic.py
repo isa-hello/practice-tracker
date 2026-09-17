@@ -10,16 +10,13 @@ retested.
 from datetime import date
 
 
-def is_retest_due(date_solved: date, needed_help: bool, retest_completed_at: date = None, today: date = None) -> bool:
-    if retest_completed_at is not None:
+def is_retest_due(date_solved: date, needed_help: bool, retest_completed_at: date = None,
+                  repeat_retests: bool = False, retest_interval_days: int = 3, today: date = None) -> bool:
+    if not needed_help:
         return False
 
-    if needed_help is False:
+    if retest_completed_at is not None and not repeat_retests:
         return False
 
-    if needed_help is True:
-        difference = today - date_solved
-        if difference.days >= 3:
-            return True
-        else:
-            return False
+    last_event_date = retest_completed_at or date_solved
+    return (today - last_event_date).days >= retest_interval_days
