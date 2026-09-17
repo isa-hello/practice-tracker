@@ -15,7 +15,10 @@ to /problems/<id>/retest.
 {% for problem in problems %}
 <p>{{ problem.title }} - {{ problem.pattern }}
     {% if problem.id in due_ids %}
-    {{ "due for retest" }}
+    {{ " - Due for retest" }}
+    <form method="POST" action="{{ url_for ('retest', problem_id=problem.id) }}">
+        <button type="submit">Mark retest done</button>
+    </form>
     {% endif %}
 </p>
 

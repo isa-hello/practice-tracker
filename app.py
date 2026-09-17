@@ -44,7 +44,7 @@ def dashboard():
     problems = Problem.query.all()
     due_ids = []
     for problem in problems:
-        if logic.is_retest_due(problem.date_solved, problem.needed_help, date.today()) is True:
+        if logic.is_retest_due(problem.date_solved, problem.needed_help, problem.retest_completed_at, date.today()) is True:
             due_ids.append(problem.id)
 
     return render_template('dashboard.html', problems=problems, due_ids=due_ids)
@@ -73,12 +73,13 @@ def add():
 
 @app.route('/problems/<int:problem_id>/retest', methods=['POST'])
 def retest(problem_id):
-    # TODO: implement
-    #
     # - look up the Problem by id (Problem.query.get_or_404(problem_id) or
     #   similar)
     # - set its retest_completed_at to today's date
     # - commit the change, then redirect back to the dashboard
+    problem = Problem.query.get_or_404(problem_id)
+    problem.retest_completed_at = date.today()
+    db.session.commit()
     
     return redirect(url_for('dashboard'))
 

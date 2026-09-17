@@ -10,7 +10,10 @@ retested.
 from datetime import date
 
 
-def is_retest_due(date_solved: date, needed_help: bool, today: date = None) -> bool:
+def is_retest_due(date_solved: date, needed_help: bool, retest_completed_at: date = None, today: date = None) -> bool:
+    if retest_completed_at is not None:
+        return False
+
     if needed_help is False:
         return False
 
