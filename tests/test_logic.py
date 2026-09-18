@@ -34,3 +34,22 @@ def test_is_retest_due_with_completed_retest():
         TODAY - timedelta(days=10), True, retest_completed_at=TODAY, today=TODAY
     )
     assert result is False, "should not be due onfce a retest has been completed"
+
+
+def test_is_retest_due_with_growing_interval():
+    # repeat_retests on, interval already grown to 6 days: not due yet if
+    # less than 6 days have passed since the last completed retest
+    result_not_due = is_retest_due(
+        TODAY - timedelta(days=20), True,
+        retest_completed_at=TODAY - timedelta(days=3),
+        repeat_retests=True, retest_interval_days=6, today=TODAY,
+    )
+    assert result_not_due is False, "should not be due before the grown interval elapses"
+
+    # same setup, but the full 6-day interval has now passed — due again
+    result_due = is_retest_due(
+        TODAY - timedelta(days=20), True,
+        retest_completed_at=TODAY - timedelta(days=6),
+        repeat_retests=True, retest_interval_days=6, today=TODAY,
+    )
+    assert result_due is True, "should be due again once the grown interval has elapsed"

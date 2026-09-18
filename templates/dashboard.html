@@ -22,7 +22,7 @@ to /problems/<id>/retest.
     {% elif not problem.needed_help %}
     {{ "(No action needed.)" }}
     {% elif problem.needed_help and problem.retest_completed_at != None %}
-    {{ "(Retest completed.) " }}
+    {{ "(At least 1 retest completed.) " }}
     {% else %}
     {{ "(Retest not due.) " }}
     {% endif %}
