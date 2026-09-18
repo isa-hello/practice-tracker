@@ -3,17 +3,36 @@
 {% block content %}
 <h2>Edit Problem</h2>
 
-<form method = "POST" action="{{ url_for('edit', problem_id=problem.id) }}">
-    Title: <input type="text" name="title" value="{{ problem.title }}"><br>
-    Pattern: <input type="text" name="pattern" value="{{ problem.pattern }}"><br>
-    Difficulty: <input type="text" name="difficulty" value="{{ problem.difficulty }}"><br>
-    Date solved: <input type="date" name="date_solved" value="{{ problem.date_solved }}"><br>
-    Needed help to solve it? <input type="checkbox" name="needed_help" {% if problem.needed_help %}checked{% endif %}><br>
-    Repeat retests (growing interval)? <input type="checkbox" name="repeat_retests" {% if problem.repeat_retests %}checked{% endif %}><br>
-    Notes:<br>
-    <textarea name="notes">{{ problem.notes }}</textarea>
-
+<div class="form-card">
+<form method="POST" action="{{ url_for('edit', problem_id=problem.id) }}">
+    <div class="field">
+        <label>Title</label>
+        <input type="text" name="title" value="{{ problem.title }}">
+    </div>
+    <div class="field">
+        <label>Pattern</label>
+        <input type="text" name="pattern" value="{{ problem.pattern }}">
+    </div>
+    <div class="field">
+        <label>Difficulty</label>
+        <input type="text" name="difficulty" value="{{ problem.difficulty }}">
+    </div>
+    <div class="field">
+        <label>Date solved</label>
+        <input type="date" name="date_solved" value="{{ problem.date_solved }}">
+    </div>
+    <div class="field checkbox-field">
+        <label><input type="checkbox" name="needed_help" {% if problem.needed_help %}checked{% endif %}> Needed help to solve it?</label>
+    </div>
+    <div class="field checkbox-field">
+        <label><input type="checkbox" name="repeat_retests" {% if problem.repeat_retests %}checked{% endif %}> Repeat retests (growing interval)?</label>
+    </div>
+    <div class="field">
+        <label>Notes</label>
+        <textarea name="notes">{{ problem.notes }}</textarea>
+    </div>
     <button type="submit">Save</button>
 </form>
+</div>
 
 {% endblock %}

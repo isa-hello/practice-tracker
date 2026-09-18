@@ -3,35 +3,36 @@
 {% block content %}
 <h2>Logged Problems</h2>
 
-<!--
-loop over `problems` (list of Problem rows passed from the dashboard
-route) and render each one — title, pattern, difficulty, date_solved.
-
-For each problem whose id is in `due_ids`, mark it as due for a cold
-retest: e.g. a "due for retest" label plus a small form/button that POSTs
-to /problems/<id>/retest.
--->
-
 {% for problem in problems %}
-<p>{{ problem.title }} - {{ problem.pattern }} - {{ problem.difficulty }} - {{ problem.notes }} - {{ problem.date_solved.strftime('%b %d, %Y') }}
-    {% if problem.id in due_ids %}
-    {{ " - Due for retest" }}
-    <form method="POST" action="{{ url_for ('retest', problem_id=problem.id) }}">
-        <button type="submit">Mark retest done</button>
-    </form>
-    {% elif not problem.needed_help %}
-    {{ "(No action needed.)" }}
-    {% elif problem.needed_help and problem.retest_completed_at != None %}
-    {{ "(At least 1 retest completed.) " }}
-    {% else %}
-    {{ "(Retest not due.) " }}
+<div class="problem">
+    <div class="problem-header">
+        <strong class="problem-title">{{ problem.title }}</strong>
+        <span class="meta">{{ problem.pattern }} &middot; {{ problem.difficulty }} &middot; {{ problem.date_solved.strftime('%b %d, %Y') }}</span>
+    </div>
+
+    {% if problem.notes %}
+    <div class="notes">{{ problem.notes }}</div>
     {% endif %}
 
-    <a href="{{ url_for('edit', problem_id=problem.id) }}">Edit</a>
-    <form method="POST" action="{{ url_for('delete', problem_id=problem.id) }}">
-        <button type="submit">Delete</button>
-    </form>
-</p>
+    <div class="actions">
+        {% if problem.id in due_ids %}
+        {{ "Due for retest" }}
+        <form method="POST" action="{{ url_for ('retest', problem_id=problem.id) }}">
+            <button type="submit">Mark retest done</button>
+        </form>
+        {% elif not problem.needed_help %}
+        {{ "(No action needed.)" }}
+        {% elif problem.needed_help and problem.retest_completed_at != None %}
+        {{ "(At least 1 retest completed.) " }}
+        {% else %}
+        {{ "(Retest not due.) " }}
+        {% endif %}
 
+        <a href="{{ url_for('edit', problem_id=problem.id) }}">Edit</a>
+        <form method="POST" action="{{ url_for('delete', problem_id=problem.id) }}">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+</div>
 {% endfor %}
 {% endblock %}

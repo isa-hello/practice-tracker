@@ -1,0 +1,182 @@
+/* Basic styling for Practice Tracker.
+   Goal is readability and spacing, not anything elaborate. */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: #222;
+    line-height: 1.5;
+    background: #f9fafb;
+}
+
+h1 {
+    margin-bottom: 4px;
+}
+
+h2 {
+    margin-bottom: 16px;
+}
+
+nav a {
+    margin-right: 16px;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+/* Each logged problem is its own card (a light border + background),
+   with real space between one card and the next - replaces the old
+   thin-line-between-rows look. */
+.problem {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+}
+
+.problem-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.problem-title {
+    font-size: 1.1em;
+}
+
+.meta {
+    color: #6b7280;
+    font-size: 0.9em;
+}
+
+/* The notes "bubble" - a shade darker than the white card so it's
+   actually visible sitting on top of it. Only rendered when notes
+   isn't empty, see dashboard.html's {% if problem.notes %}. */
+.notes {
+    background: #eef0f3;
+    color: #4b5563;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.actions {
+    margin-top: 12px;
+}
+
+/* Forms (retest/delete buttons) default to block-level, which is
+   what was causing them to stack on separate lines. Inline-block
+   lets them sit next to the Edit link instead. */
+form {
+    display: inline-block;
+    margin: 4px 8px 4px 0;
+}
+
+/* The add/edit forms are the exception - those should NOT be
+   inline-block (they're a whole standalone form, not a small action
+   next to other things), so this overrides the rule above for them. */
+.form-card form {
+    display: block;
+    margin: 0;
+}
+
+/* Card wrapper around the add/edit forms, matching the same visual
+   language as .problem on the dashboard. This is the piece that was
+   missing: add.html/edit.html already reference these classes, this
+   file just didn't define them yet. */
+.form-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px 24px;
+    max-width: 420px;
+}
+
+.field {
+    margin-bottom: 14px;
+}
+
+.field label {
+    display: block;
+    font-size: 0.9em;
+    color: #4b5563;
+    margin-bottom: 4px;
+}
+
+.field input[type="text"],
+.field input[type="date"],
+.field textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Checkboxes need their label laid out sideways (box next to text),
+   not stacked like the other fields. */
+.checkbox-field label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+a {
+    color: #2563eb;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+button:hover {
+    background: #e5e7eb;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+    padding: 4px 6px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 4px;
+}
+
+.flash {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 0.95em;
+}

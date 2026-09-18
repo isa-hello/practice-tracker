@@ -3,17 +3,40 @@
 {% block content %}
 <h2>Log a Solved Problem</h2>
 
-<form method = "POST" action="{{ url_for('add') }}">
-    Title: <input type="text" name="title"><br>
-    Pattern: <input type="text" name="pattern"><br>
-    Difficulty: <input type="text" name="difficulty"><br>
-    Date solved: <input type="date" name="date_solved"><br>
-    Needed help to solve it? <input type="checkbox" name="needed_help"><br>
-    Repeat retests (growing interval)? <input type="checkbox" name="repeat_retests"><br>
-    Notes:<br>
-    <textarea name="notes"></textarea>
+{% if message %}
+<div class="flash">{{ message }}</div>
+{% endif %}
 
+<div class="form-card">
+<form method="POST" action="{{ url_for('add') }}">
+    <div class="field">
+        <label>Title</label>
+        <input type="text" name="title">
+    </div>
+    <div class="field">
+        <label>Pattern</label>
+        <input type="text" name="pattern">
+    </div>
+    <div class="field">
+        <label>Difficulty</label>
+        <input type="text" name="difficulty">
+    </div>
+    <div class="field">
+        <label>Date solved</label>
+        <input type="date" name="date_solved">
+    </div>
+    <div class="field checkbox-field">
+        <label><input type="checkbox" name="needed_help"> Needed help to solve it?</label>
+    </div>
+    <div class="field checkbox-field">
+        <label><input type="checkbox" name="repeat_retests"> Repeat retests (growing interval)?</label>
+    </div>
+    <div class="field">
+        <label>Notes</label>
+        <textarea name="notes"></textarea>
+    </div>
     <button type="submit">Save</button>
 </form>
+</div>
 
 {% endblock %}

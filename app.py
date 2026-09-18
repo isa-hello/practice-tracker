@@ -64,6 +64,8 @@ def add():
     #   Problem row from them, add it to the db session, commit, then
     #   redirect back to the dashboard (url_for('dashboard'))
 
+    message = None
+
     if request.method == 'POST':
         title = request.form['title']
         pattern = request.form['pattern']
@@ -76,7 +78,8 @@ def add():
         problem = Problem(title=title, pattern=pattern, difficulty=difficulty, date_solved=date_solved, needed_help=needed_help, repeat_retests=repeat_retests, notes=notes)
         db.session.add(problem)
         db.session.commit()
-    return render_template('add.html')
+        message = f"Problem '{problem.title}' added!"
+    return render_template('add.html', message=message)
 
 
 @app.route('/problems/<int:problem_id>/retest', methods=['POST'])
