@@ -43,7 +43,7 @@ def dashboard():
 
     problems = Problem.query.all()
     due_ids = []
-    for problem in problems:    
+    for problem in problems:
         if logic.is_retest_due(
             problem.date_solved,
             problem.needed_help,
@@ -90,7 +90,51 @@ def retest(problem_id):
     if problem.repeat_retests is True:
         problem.retest_interval_days *= 2
     db.session.commit()
-    
+
+    return redirect(url_for('dashboard'))
+
+
+@app.route('/problems/<int:problem_id>/edit', methods=['GET', 'POST'])
+def edit(problem_id):
+    # - look up the Problem by id — same lookup as retest() above
+    #
+    # - GET: render a form pre-filled with this problem's current values,
+    #   so you're editing what's there instead of starting from a blank
+    #   add.html. This needs a new template (start it as a copy of
+    #   add.html) where each input's `value` is bound to the matching
+    #   `problem.<field>` — see the worked example in chat for the Jinja
+    #   syntax, it's one small addition to a pattern you've already built
+    #
+    # - POST: read the same fields add() already reads from request.form,
+    #   but instead of building a new Problem, set them onto the existing
+    #   `problem` object you looked up above (e.g. problem.title =
+    #   request.form['title']), then commit and redirect back to the
+    #   dashboard
+    problem = Problem.query.get_or_404(problem_id)
+    if request.method == 'POST':
+        problem.title = request.form['title']
+        problem.pattern = request.form['pattern']
+        problem.difficulty = request.form['difficulty']
+        problem.date_solved = date.fromisoformat(request.form['date_solved'])
+        problem.needed_help = request.form.get('needed_help') == 'on'
+        problem.repeat_retests = request.form.get('repeat_retests') == 'on'
+        problem.notes = request.form['notes']
+        db.session.commit()
+        return redirect(url_for('dashboard'))
+
+    return render_template('edit.html', problem=problem)
+
+
+@app.route('/problems/<int:problem_id>/delete', methods=['POST'])
+def delete(problem_id):
+    # - look up the Problem by id — same lookup as retest() above
+    # - db.session.delete(problem) — this is the one genuinely new piece:
+    #   nothing in the app has removed a row yet, everything so far has
+    #   only added or updated one
+    # - commit, then redirect back to the dashboard
+    problem = Problem.query.get_or_404(problem_id)
+    db.session.delete(problem)
+    db.session.commit()
     return redirect(url_for('dashboard'))
 
 

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Problem</h2>
+
+<form method = "POST" action="{{ url_for('edit', problem_id=problem.id) }}">
+    Title: <input type="text" name="title" value="{{ problem.title }}"><br>
+    Pattern: <input type="text" name="pattern" value="{{ problem.pattern }}"><br>
+    Difficulty: <input type="text" name="difficulty" value="{{ problem.difficulty }}"><br>
+    Date solved: <input type="date" name="date_solved" value="{{ problem.date_solved }}"><br>
+    Needed help to solve it? <input type="checkbox" name="needed_help" {% if problem.needed_help %}checked{% endif %}><br>
+    Repeat retests (growing interval)? <input type="checkbox" name="repeat_retests" {% if problem.repeat_retests %}checked{% endif %}><br>
+    Notes:<br>
+    <textarea name="notes">{{ problem.notes }}</textarea>
+
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}
